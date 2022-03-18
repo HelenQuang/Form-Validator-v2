@@ -1,30 +1,47 @@
 import "./App.css";
 import FormControl from "./Components/FormControl";
-import Button from "./Components/Button";
 import PopupModal from "./Components/PopupModal";
+import UserList from "./Components/UserList";
+import { useState } from "react";
 
 const App = () => {
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log();
-  };
+  const [usersList, setUsersList] = useState([
+    {
+      key: 123,
+      firstname: "Ha",
+      lastname: "Quang",
+      birth: "25/06/1997",
+      email: "qvha.97@gmail.com",
+      username: "CamTheMeow",
+    },
+  ]);
 
-  const getData = (data) => {
-    console.log(data);
+  const addNewUserHandler = (
+    userFirstname,
+    userLastname,
+    userBirth,
+    userEmail,
+    userUsername
+  ) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        {
+          key: Math.random(),
+          firstname: userFirstname,
+          lastname: userLastname,
+          birth: userBirth,
+          email: userEmail,
+          username: userUsername,
+        },
+      ];
+    });
   };
-
-  const onClickHandler = () => {};
 
   return (
     <div className="container">
-      <form onSubmit={submitHandler}>
-        <h2>Register With Us</h2>
-        <FormControl getData={getData} />
-        <Button type={"submit"} onClick={onClickHandler}>
-          Submit
-        </Button>
-      </form>
-
+      <FormControl onAddNewUser={addNewUserHandler} />
+      <UserList users={usersList} />
       <PopupModal />
     </div>
   );
