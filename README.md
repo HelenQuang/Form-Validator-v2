@@ -4,12 +4,12 @@ Create a simple client side form validation
 
 ## Project Specifications
 
-- Create form UI
-- Show error messages under specific inputs
-- Show success border when input is satisfied
-- checkRequired() to accept array of inputs
-- checkLength() to check min and max length of username and password
-- checkEmail() and checkDOB() to validate email and date of birth with regex
-- checkPasswordsMatch() to match confirm password
+- Create UI with module.css
+- Check for no empty input
+- Validate email and date of birth with regex
+- Check min and max length of username and password
+- Check for matching password
+- If satisfied, add new user to below table
+- If not satisfied, show error modal
 
 ## DEMO Link:

@@ -1,7 +1,6 @@
 import "./App.css";
 import FormControl from "./Components/FormControl";
-import PopupModal from "./Components/PopupModal";
-import UserList from "./Components/UserList";
+import UserTable from "./Components/UserTable";
 import { useState } from "react";
 
 const App = () => {
@@ -41,8 +40,7 @@ const App = () => {
   return (
     <div className="container">
       <FormControl onAddNewUser={addNewUserHandler} />
-      <UserList users={usersList} />
-      <PopupModal />
+      <UserTable users={usersList} />
     </div>
   );
 };
