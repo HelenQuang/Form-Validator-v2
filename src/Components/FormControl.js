@@ -4,46 +4,59 @@ import Input from "./Input";
 import Button from "./Button";
 import ErrorModal from "./ErrorModal";
 import { useState } from "react";
+import useInput from "../Hooks/useInput";
 
 const FormControl = ({ onAddNewUser }) => {
-  const [enteredFirstname, setEnteredFirstname] = useState("");
-  const [enteredLastname, setEnteredLastname] = useState("");
-  const [enteredDOB, setEnteredDOB] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredPassword1, setEnteredPassword1] = useState("");
-  const [enteredPassword2, setEnteredPassword2] = useState("");
+  const {
+    enteredValue: enteredFirstname,
+    valueIsValid: enteredFirstnameIsValid,
+    valueChangeHandler: firstnameChangeHandler,
+    reset: resetFirstname,
+  } = useInput((value) => value.trim() !== "");
 
-  const firstnameChangeHandler = (e) => {
-    setEnteredFirstname(e.target.value);
-  };
+  const {
+    enteredValue: enteredLastname,
+    valueIsValid: enteredLastnameIsValid,
+    valueChangeHandler: lastnameChangeHandler,
+    reset: resetLastname,
+  } = useInput((value) => value.trim() !== "");
 
-  const lastnameChangeHandler = (e) => {
-    setEnteredLastname(e.target.value);
-  };
+  const {
+    enteredValue: enteredDOB,
+    valueIsValid: enteredDOBIsValid,
+    valueChangeHandler: DOBChangeHandler,
+    reset: resetDOB,
+  } = useInput((value) => value.trim() !== "");
 
-  const DOBChangeHandler = (e) => {
-    setEnteredDOB(e.target.value);
-  };
+  const {
+    enteredValue: enteredEmail,
+    valueIsValid: enteredEmailIsValid,
+    valueChangeHandler: emailChangeHandler,
+    reset: resetEmail,
+  } = useInput((value) => value.trim() !== "");
 
-  const emailChangeHandler = (e) => {
-    setEnteredEmail(e.target.value);
-  };
+  const {
+    enteredValue: enteredUsername,
+    valueIsValid: enteredUsernameIsValid,
+    valueChangeHandler: usernameChangeHandler,
+    reset: resetUsername,
+  } = useInput((value) => value.trim() !== "");
 
-  const usernameChangeHandler = (e) => {
-    setEnteredUsername(e.target.value);
-  };
+  const {
+    enteredValue: enteredPassword1,
+    valueIsValid: enteredPassword1IsValid,
+    valueChangeHandler: password1ChangeHandler,
+    reset: resetPassword1,
+  } = useInput((value) => value.trim() !== "");
 
-  const password1ChangeHandler = (e) => {
-    setEnteredPassword1(e.target.value);
-  };
-
-  const password2ChangeHandler = (e) => {
-    setEnteredPassword2(e.target.value);
-  };
+  const {
+    enteredValue: enteredPassword2,
+    valueIsValid: enteredPassword2IsValid,
+    valueChangeHandler: password2ChangeHandler,
+    reset: resetPassword2,
+  } = useInput((value) => value.trim() !== "");
 
   const [error, setError] = useState();
-
   const closeErrorModal = () => {
     setError(null);
   };
@@ -53,17 +66,27 @@ const FormControl = ({ onAddNewUser }) => {
 
     //Check required:
     if (
-      enteredFirstname.trim().length === 0 ||
-      enteredLastname.trim().length === 0 ||
-      enteredDOB.trim().length === 0 ||
-      enteredEmail.trim().length === 0 ||
-      enteredUsername.trim().length === 0 ||
-      enteredPassword1.trim().length === 0 ||
-      enteredPassword2.trim().length === 0
+      !enteredFirstnameIsValid ||
+      !enteredLastnameIsValid ||
+      !enteredDOBIsValid ||
+      !enteredEmailIsValid ||
+      !enteredUsernameIsValid ||
+      !enteredPassword1IsValid ||
+      !enteredPassword2IsValid
     ) {
       setError({ title: "Empty input", message: "" });
       return;
     }
+
+    console.log(
+      enteredFirstnameIsValid,
+      enteredLastnameIsValid,
+      enteredDOBIsValid,
+      enteredEmailIsValid,
+      enteredUsernameIsValid,
+      enteredPassword1IsValid,
+      enteredPassword2IsValid
+    );
 
     //Check DOB validation
     const DOBRegex =
@@ -129,14 +152,14 @@ const FormControl = ({ onAddNewUser }) => {
       enteredPassword2
     );
 
-    //Empty inputs:
-    setEnteredFirstname("");
-    setEnteredLastname("");
-    setEnteredDOB("");
-    setEnteredEmail("");
-    setEnteredUsername("");
-    setEnteredPassword1("");
-    setEnteredPassword2("");
+    //Empty input
+    resetFirstname();
+    resetLastname();
+    resetDOB();
+    resetEmail();
+    resetUsername();
+    resetPassword1();
+    resetPassword2();
   };
 
   return (
@@ -148,6 +171,7 @@ const FormControl = ({ onAddNewUser }) => {
           closeModal={closeErrorModal}
         />
       )}
+
       <form onSubmit={submitHandler} className={styles["form-control"]}>
         <h2>Register With Us</h2>
         <Input
